@@ -137,7 +137,7 @@ if __name__ == "__main__":
 	graph[21].append(17)
 
     # añadiendo el costo a los nodos, todos con el valor de 2
-	cost[(0, 1)] = cost[(1, 0)] = cost[(1, 4)]= cost[(4, 1)]= cost[(0, 1)]= cost[(1, 8)]= cost[(8, 1)]= cost[(4, 5)]= cost[(5, 4)]= cost[(4, 7)]= cost[(7, 4)]= cost[(5, 3)]= cost[(3, 5)]= cost[(7, 2)]= cost[(2, 7)]= cost[(2, 3)]= cost[(3, 2)]= cost[(2, 6)]= cost[(6, 2)]= cost[(6, 8)]= cost[(8, 6)]= cost[(6, 3)]= cost[(3, 6)]= cost[(3, 8)]= cost[(8, 3)] = 2
+	cost[(1, 8)] = cost[(1, 0)] = cost[(1, 4)]= cost[(4, 1)]= cost[(0, 1)]= cost[(1, 8)]= cost[(8, 1)]= cost[(4, 5)]= cost[(5, 4)]= cost[(4, 7)]= cost[(7, 4)]= cost[(5, 3)]= cost[(3, 5)]= cost[(7, 2)]= cost[(2, 7)]= cost[(2, 3)]= cost[(3, 2)]= cost[(2, 6)]= cost[(6, 2)]= cost[(6, 8)]= cost[(8, 6)]= cost[(6, 3)]= cost[(3, 6)]= cost[(3, 8)]= cost[(8, 3)] = 2
 	
 	#Imprimimos el nodo y el grafo en modo de lista de listas y en un diccionario para los costos
 	#print(graph, cost)
