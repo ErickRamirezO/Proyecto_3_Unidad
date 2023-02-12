@@ -2,6 +2,17 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 def creacionGrafo():
+	"""
+ 	Función que nos permite crear una lista de lista que representa a los nodos del grafo y sus conexiones
+  	además de añadir el costo a cada conexion entre nodos usando un diccionario.
+   	Parámetros
+	_____________
+ 	No tiene parámetros
+  	Retorno
+   	____________
+	graph: grafo con todos los nodos conectados entre sí
+ 	cost: diccionario que contiene el costo de cada conexion entre los nodos del grafo
+  	"""
 	# creación del grafo y diccionario de costos
 	graph, cost = [[] for i in range(21)], {}
 	#Imprimimos el nodo y el grafo en modo de lista de listas y en un diccionario para los costos
@@ -112,6 +123,15 @@ def creacionGrafo():
 
 
 def graficaGrafo(grafo):
+	"""
+ 	Función que nos permite realizar la gráfica del grafo en una interfaz gráfica
+  	Parámetros
+	_____________
+ 	grafo: lista de lista que contiene a los nodos de dicho grafo.
+  	Retorno
+   	____________
+	No retorna ningún valor
+  	"""
 	G = nx.Graph()
 
 	#Añadir nodos al grafo
@@ -128,6 +148,16 @@ def graficaGrafo(grafo):
 	plt.show()
 
 def nodos():
+	"""
+ 	Función que nos permite establecer cual va a ser el nodo de partido y el objetivo
+   	Parámetros
+	_____________
+ 	No tiene parámetros
+  	Retorno
+   	____________
+	inicio: nodo desde el cual se va a partir la búsqueda
+ 	meta: nodo al cual se desea llegar
+  	"""
 	# solicitamos nodo inicio
 	inicio = int(input("Ingrese el nodo donde quiere iniciar: "))
 	# solicitamos el nodo objetivo
