@@ -10,8 +10,7 @@ def busqueda_general(grafo, costo, inicio, meta):
   	meta: nodo a donde se desea llegar.
    	Retorno
    	--------------------
-   	costo_actual: valor del costo obtenido al realizar la busqueda
-	None: Si no se encuentra un camino desde el nodo de inicio hasta el nodo de destino
+   	No retorna ningún valor
  	"""
 	# Inicializa una lista vacía `rutas` para almacenar las rutas encontradas desde el nodo inicio hasta el nodo destino.
 	rutas = []
@@ -31,8 +30,9 @@ def busqueda_general(grafo, costo, inicio, meta):
 					lista.append(
 					 (vecino, ruta + [vecino], costo_actual + costo[(nodo, vecino)]))
 
-# Retorna la lista de rutas encontradas desde el nodo inicio hasta el nodo destino junto con sus costos.
-	return rutas
+ 	# Imprime cada ruta y su costo encontrado.
+	for ruta, costo in rutas:
+		print("Ruta:", ruta, "Costo:", costo)
 
 
 def busquedaAProfundidad(graph, start, end):

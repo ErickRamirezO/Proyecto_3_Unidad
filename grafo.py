@@ -147,6 +147,25 @@ def graficaGrafo(grafo):
 	nx.draw(G, with_labels=True)
 	plt.show()
 
+def mostrarConexionesNodos(grafo,costo):
+	"""
+	Función que realiza el recorrido de cada nodo del grafo para mostrar sus conexiones y costo
+ 	Parámetros
+  	__________
+  	grafo: lista de lista que contiene a los nodos de dicho grafo.
+   	costo: diccionario que contiene el costo de cada conexion entre los nodos del grafo
+  	Retorno
+   	____________
+	No retorna ningún valor
+ 	"""
+	for i, nodo in enumerate(grafo):
+		print("Nodo: ", i)
+		print("Conexiones: ", nodo)
+		suma_costo = 0
+		for conexion in nodo:
+			suma_costo += costo[(i, conexion)]
+		print("Costo total: ", suma_costo)
+
 def nodos():
 	"""
  	Función que nos permite establecer cual va a ser el nodo de partido y el objetivo

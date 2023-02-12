@@ -1,4 +1,5 @@
-import grafo,busquedas
+import grafo as grafos
+import busquedas
 from os import system
 
 def regresarmenu():
@@ -18,7 +19,7 @@ menuPrincipal = """PoolCleaning
 1 - Inicializar agente
 2 - Mostrar grafo
 3 - Realizar una busqueda
-4 - 
+4 - Ver conexiones y costos de cada nodo
 5.- 
 6.- 
 7.- Salir
@@ -35,69 +36,7 @@ menuBusquedas = """PoolCleaning
 ------
 """
 
-def menuBusqueda(graph,cost):
-	"""
-  Funcion: L afuncion menu, nos mostrara en pantalla todos los procesos que tiene el software 
-
- Parametros: No, contiene ningun parametro
-
- Retorna: No, retorna ningun dato 
- 	"""
-	print(f"\033[36m{menuPrincipal}")
-  #el bucle while para que el usuario ingrese la opcion correcta
-	while True:
-	    try:
-        #mensaje de ingreso de opcion
-	        opcion = int(input("\033[0mIngrese una opción: "))
-	        break
-        # si la opcion ingresada por el usuario es incorrecta nos mostara un error 
-	    except ValueError:
-        #mensaje que pide al usuario que ingrese de nuevo la opcion correcta
-	        print("\033[31mEntrada inválida, ingrese solo numeros")
-        #limpia la pantalla
-	        system("clear")
-        # muestra el menu de opciones 
-	        menu()
-        
-	match opcion:
-  #primer caso 
-		case 1:
-     		#limpia la pantalla 
-			system('clear')
-      		# mensaje de inicializar agente
-			print("\033[0m---Busqueda General---\n")
-			# llamamos a la funcion nodos del modulo grafo
-			inicio,meta = grafo.nodos()
-      		# llamamos a la funcion busqueda_general del modulo busquedas
-			busquedas.busqueda_general(graph,cost,inicio,meta)
-		case 2:
-      		#limpia la pantalla 
-			system('clear')
-      		# mensaje de Búsqueda a Profundidad
-			print("\033[0m---Búsqueda a Profundidad---\n")		
-			# llamamos a la funcion nodos del modulo grafo
-			inicio,meta = grafo.nodos()
-     		# llamamos a la funcion busquedaAProfundidad del modulo busquedas
-			busquedas.busquedaAProfundidad(graph,inicio, meta)
-    	# tercer caso 
-		case 3:
-     		#limpiamos la pantalla 
-			system('clear')
-      		#mensaje de Búsqueda por Dijkstra 
-			print("\033[0m---Búsqueda por Dijkstra---\n")		
-			# llamamos a la funcion nodos del modulo grafo
-			inicio, meta = grafo.nodos()
-      		#llamamos a la funcion dijkstra del modulo busquedas
-			busquedas.dijkstra(graph,inicio, meta,cost)
-		case 4:
-      		#limpiamos la pantalla 
-			system('clear')
-	 		#llamamos a la funcion menu
-			menu()
-		case _:
-			print("\033[31mIngrese una opción válida")
-
-def menu(graph,cost):
+def menu():
 	"""
   Funcion: L afuncion menu, nos mostrara en pantalla todos los procesos que tiene el software 
 
@@ -136,7 +75,7 @@ def menu(graph,cost):
       # mensaje de mostrar grafo
 			print("\033[0m---Mostrar Grafo---\n")
       # se guarda en la funcion de catalogo 
-			grafo.graficaGrafo(graph)
+			grafos.graficaGrafo(grafo)
     # tercer caso 
 		case 3:
       #limpia la pantalla 
@@ -144,14 +83,15 @@ def menu(graph,cost):
       #mensaje de Realizar una Búsqueda
 			print("\033[0m---Realizar una Búsqueda---\n")
       #se guarda en la funcion menuBusqueda
-			menuBusqueda(graph,cost)
+			menuBusqueda(grafo,costos)
     #cuarto caso 
 		case 4:
       #limpiar pantalla 
 			system('clear')
-      #muestra la opcion de prestamo del libro
-			print("\033[0m---Prestamo de libros---\n")
-      #llama  a la funcion 
+      #imprime mensaje Ver conexiones y costos de cada nodo
+			print("\033[0m---Ver conexiones y costos de cada nodos---\n")
+      #llama  a la funcion mostrarConexionesNodos del modulo grafo
+			grafos.mostrarConexionesNodos(grafo,costos)
     #quinto caso
 		case 5:
       #limpia la pantalla
@@ -175,15 +115,79 @@ def menu(graph,cost):
 			print("\033[31mIngrese una opción válida")
 
 
+def menuBusqueda():
+	"""
+  Funcion: L afuncion menu, nos mostrara en pantalla todos los procesos que tiene el software 
+
+ Parametros: No, contiene ningun parametro
+
+ Retorna: No, retorna ningun dato 
+ 	"""
+	print(f"\033[36m{menuPrincipal}")
+  #el bucle while para que el usuario ingrese la opcion correcta
+	while True:
+	    try:
+        #mensaje de ingreso de opcion
+	        opcion = int(input("\033[0mIngrese una opción: "))
+	        break
+        # si la opcion ingresada por el usuario es incorrecta nos mostara un error 
+	    except ValueError:
+        #mensaje que pide al usuario que ingrese de nuevo la opcion correcta
+	        print("\033[31mEntrada inválida, ingrese solo numeros")
+        #limpia la pantalla
+	        system("clear")
+        # muestra el menu de opciones 
+	        menu()
+        
+	match opcion:
+  #primer caso 
+		case 1:
+     		#limpia la pantalla 
+			system('clear')
+      		# mensaje de inicializar agente
+			print("\033[0m---Busqueda General---\n")
+			# llamamos a la funcion nodos del modulo grafo
+			inicio,meta = grafo.nodos()
+      		# llamamos a la funcion busqueda_general del modulo busquedas
+			busquedas.busqueda_general(grafo,costos,inicio,meta)
+		case 2:
+      		#limpia la pantalla 
+			system('clear')
+      		# mensaje de Búsqueda a Profundidad
+			print("\033[0m---Búsqueda a Profundidad---\n")		
+			# llamamos a la funcion nodos del modulo grafo
+			inicio,meta = grafo.nodos()
+     		# llamamos a la funcion busquedaAProfundidad del modulo busquedas
+			busquedas.busquedaAProfundidad(grafo,inicio, meta)
+    	# tercer caso 
+		case 3:
+     		#limpiamos la pantalla 
+			system('clear')
+      		#mensaje de Búsqueda por Dijkstra 
+			print("\033[0m---Búsqueda por Dijkstra---\n")		
+			# llamamos a la funcion nodos del modulo grafo
+			inicio, meta = grafo.nodos()
+      		#llamamos a la funcion dijkstra del modulo busquedas
+			busquedas.dijkstra(grafo,inicio, meta,costos)
+		case 4:
+      		#limpiamos la pantalla 
+			system('clear')
+	 		#llamamos a la funcion menu
+			menu()
+		case _:
+			print("\033[31mIngrese una opción válida")
 
 if __name__ == "__main__":
+	#creamos variables globales para grafo y costos
+	global grafo, costos
 	#Llamamos a la funcion para que cree el grafo
-	grafo,costos = grafo.creacionGrafo()
-	menu(grafo,costos)
-
-	#Imprimimos el nodo y el grafo en modo de lista de listas y en un diccionario para los costos
-	#print(graph, cost)
-	#print(rutas)
-	# Imprime cada ruta y su costo encontrado.
-	#for ruta, costo in rutas:
-	#	print("Ruta:", ruta, "Costo:", costo)
+	grafo,costos = grafos.creacionGrafo()
+	while True:
+		#Limpiamos la pantalla
+		system('clear')
+		#print(os.getenv("REPLIT_DB_URL"))
+		#llamada a la función menu
+		menu()
+		#solicitamos al usuario que persione cualquier tecla
+		#para continuar con el programa
+		input("\n\033[0mPresione una tecla para continuar... ")
