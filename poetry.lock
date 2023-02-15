@@ -623,6 +623,17 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
+name = "termcolor"
+version = "2.2.0"
+description = "ANSI color formatting for output in terminal"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+tests = ["pytest", "pytest-cov"]
+
+[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -712,7 +723,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10.0,<3.11"
-content-hash = "97d6c8cefa89cdd2252c0a8696b2bb29577d931600c9991cbf43e83323805849"
+content-hash = "bce4217d4739119456b00b374047488470a208603b4817dfcd976d8c5846be03"
 
 [metadata.files]
 aiohttp = []
@@ -764,6 +775,7 @@ replit-python-lsp-server = []
 requests = []
 rope = []
 six = []
+termcolor = []
 toml = []
 tomli = []
 typing-extensions = []

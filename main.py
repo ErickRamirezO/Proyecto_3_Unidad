@@ -20,7 +20,7 @@ menuPrincipal = """PoolCleaning
 2 - Mostrar grafo
 3 - Realizar una busqueda
 4 - Ver conexiones y costos de cada nodo
-5.- 
+5.- Limpiar todas las piscinas empezando desde la más sucia
 6.- 
 7.- Salir
 ------
@@ -96,9 +96,13 @@ def menu():
 		case 5:
       #limpia la pantalla
 			system('clear')
-      #mensaje de notificacion
-			print("\033[0m---Notificaciones---\n")
-      #llamamos a la funcion de notificacion
+      #mensaje de Limpiar todas las piscinas empezando desde la más sucia
+			print("\033[0m---Limpiar todas las piscinas empezando desde la más sucia---\n")
+			grafos.mostrarEstadosPiscinas(estados)
+      #llamamos a la funcion limpiarDesdePiscinaMasSucia del modulo grafo
+			grafos.limpiarDesdePiscinaMasSucia(estados)
+			grafos.mostrarEstadosPiscinas(estados)
+			
     #sexto caso 
 		case 6:
       #limpia la pantalla 
@@ -181,7 +185,7 @@ if __name__ == "__main__":
 	#creamos variables globales para grafo y costos
 	global grafo, costos
 	#Llamamos a la funcion para que cree el grafo
-	grafo,costos = grafos.creacionGrafo()
+	grafo,costos,estados = grafos.creacionGrafo()
 	while True:
 		#Limpiamos la pantalla
 		system('clear')

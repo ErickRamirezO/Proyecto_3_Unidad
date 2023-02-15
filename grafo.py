@@ -1,5 +1,7 @@
 import networkx as nx
+import random
 import matplotlib.pyplot as plt
+from termcolor import colored
 
 def creacionGrafo():
 	"""
@@ -118,8 +120,10 @@ def creacionGrafo():
 	        8, 15)] = cost[(12, 8)] = cost[(13, 8)] = cost[(14, 8)] = cost[(
 	         15, 8)] = cost[(16, 17)] = cost[(16, 18)] = cost[(16, 19)] = cost[(
 	          16, 20)] = cost[(17, 16)] = cost[(18, 16)] = cost[(19, 16)] = cost[(20, 16)] = 2
+	# creación de la lista de estados
+	states = [random.randint(1, 5) for i in range(21)]
 	
-	return graph, cost
+	return graph, cost, states
 
 
 def graficaGrafo(grafo):
@@ -182,3 +186,38 @@ def nodos():
 	# solicitamos el nodo objetivo
 	meta = int(input("Ingrese el nodo al que quiere llegar: "))
 	return inicio,meta
+
+def mostrarEstadosPiscinas(estados):
+	print("\nPiscinas más sucias")
+	for j, estado in enumerate(estados):
+		if estado == 5:
+			print("Piscina:", j, " - Estado piscina: ", colored("Muy sucio", "red"))
+		elif estado == 4:
+			print("Piscina:", j, " - Estado piscina: ", colored("Poco sucio", "light_red"))
+		elif estado == 3:
+			print("Piscina:", j, " - Estado piscina: ", colored("Regular", "yellow"))
+		elif estado == 2:
+			print("Piscina:", j, " - Estado piscina: ", colored("Casi Limpio", "light_green"))
+		else:
+			print("Piscina:", j, " - Estado piscina: ", colored("Limpio", "cyan"))
+
+
+def limpiarDesdePiscinaMasSucia(estados):
+	print("\nComenzando limpieza...\n")
+	while max(estados) >= 2:
+		nodosSucios = buscarNodosSucios(estados)
+		for nodo in nodosSucios:
+			print(f"Limpiando nodo {nodo}...")
+			estados[nodo] = 1
+	
+	
+# Función para buscar los nodos más sucios
+def buscarNodosSucios(estados):
+    nodosSucios = []
+    nodoMasSucio = max(estados)
+    for i, estado in enumerate(estados):
+        if estado == nodoMasSucio:
+            nodosSucios.append(i)
+    return nodosSucios
+
+	
