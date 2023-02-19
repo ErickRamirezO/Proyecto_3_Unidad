@@ -18,11 +18,10 @@ menuPrincipal = """PoolCleaning
 ----------------------------------
 1 - Inicializar agente
 2 - Mostrar grafo
-3 - Realizar una busqueda
+3 - Realizar busqueda de la piscina más sucia
 4 - Ver conexiones y costos de cada nodo
 5.- Limpiar todas las piscinas empezando desde la más sucia
-6.- 
-7.- Salir
+6.- Salir
 ------
 """
 
@@ -82,8 +81,8 @@ def menu():
 			system('clear')
       #mensaje de Realizar una Búsqueda
 			print("\033[0m---Realizar una Búsqueda---\n")
-      #se guarda en la funcion menuBusqueda
-			menuBusqueda(grafo,costos)
+      #llamamos la funcion menuBusqueda
+			menuBusqueda()
     #cuarto caso 
 		case 4:
       #limpiar pantalla 
@@ -98,36 +97,33 @@ def menu():
 			system('clear')
       #mensaje de Limpiar todas las piscinas empezando desde la más sucia
 			print("\033[0m---Limpiar todas las piscinas empezando desde la más sucia---\n")
+		#llamamos a la funcion mostrarEstadosPiscinas del modulo grafo para mostrar todas las piscinas y sus estados antes de la limpieza
 			grafos.mostrarEstadosPiscinas(estados)
       #llamamos a la funcion limpiarDesdePiscinaMasSucia del modulo grafo
 			grafos.limpiarDesdePiscinaMasSucia(estados)
+		#llamamos a la funcion mostrarEstadosPiscinas del modulo grafo para mostrar todas las piscinas y sus estados después de la limpieza
 			grafos.mostrarEstadosPiscinas(estados)
-			
-    #sexto caso 
+		#sexto caso
 		case 6:
-      #limpia la pantalla 
-			system('clear')
-      #muestra la opcion del siguimiento de libros
-			print("\033[0m---Seguimiento libros---\n")
-      #llamamos a la funcion de seguimiento de libros
-    #septimo caso
-		case 7:
             #mensaje de agradecimiento al usuario
 			print("\033[36mGracias... ¡Vuelve pronto!")
-      #cierra el programa 
+      		#cierra el programa 
+			exit()
+		#caso que no ingrese ningun caracter
 		case _:
+			#imprimimos que la opcion no es valida
 			print("\033[31mIngrese una opción válida")
 
 
 def menuBusqueda():
 	"""
-  Funcion: L afuncion menu, nos mostrara en pantalla todos los procesos que tiene el software 
+  Funcion: Nos mostrará en pantalla todo el menú referente a los algoritmos de busqueda disponibles
 
  Parametros: No, contiene ningun parametro
 
  Retorna: No, retorna ningun dato 
  	"""
-	print(f"\033[36m{menuPrincipal}")
+	print(f"\033[36m{menuBusquedas}")
   #el bucle while para que el usuario ingrese la opcion correcta
 	while True:
 	    try:
@@ -150,46 +146,71 @@ def menuBusqueda():
 			system('clear')
       		# mensaje de inicializar agente
 			print("\033[0m---Busqueda General---\n")
-			# llamamos a la funcion nodos del modulo grafo
-			inicio,meta = grafo.nodos()
-      		# llamamos a la funcion busqueda_general del modulo busquedas
-			busquedas.busqueda_general(grafo,costos,inicio,meta)
+			#se comprueba si todos los elementos de la lista "estados" son iguales al primer elemento
+			if all(x == estados[0] for x in estados):
+				#imprimimos que todas las piscinas están limpias
+			    print("Todas las piscinas se encuentran limpias.")
+			#caso contrario
+			else:
+				#llamamos a la funcion mostrarEstadosPiscinas del modulo grafo para mostrar todas las piscinas y sus estados antes de la limpieza
+				grafos.mostrarEstadosPiscinas(estados)
+				# llamamos a la funcion nodos del modulo grafo
+				inicio,meta = grafos.nodos()
+	      		# llamamos a la funcion busqueda_general del modulo busquedas
+				busquedas.busqueda_general(grafo,costos,inicio,meta)
 		case 2:
       		#limpia la pantalla 
 			system('clear')
       		# mensaje de Búsqueda a Profundidad
-			print("\033[0m---Búsqueda a Profundidad---\n")		
-			# llamamos a la funcion nodos del modulo grafo
-			inicio,meta = grafo.nodos()
-     		# llamamos a la funcion busquedaAProfundidad del modulo busquedas
-			busquedas.busquedaAProfundidad(grafo,inicio, meta)
+			print("\033[0m---Búsqueda a Profundidad---\n")	
+			#se comprueba si todos los elementos de la lista "estados" son iguales al primer elemento
+			if all(x == estados[0] for x in estados):
+				#imprimimos que todas las piscinas están limpias
+			    print("Todas las piscinas se encuentran limpias.")
+			#caso contrario
+			else:
+				#llamamos a la funcion mostrarEstadosPiscinas del modulo grafo para mostrar todas las piscinas y sus estados antes de la limpieza
+				grafos.mostrarEstadosPiscinas(estados)
+				# llamamos a la funcion nodos del modulo grafo
+				inicio,meta = grafos.nodos()
+	     		# llamamos a la funcion busquedaAProfundidad del modulo busquedas
+				busquedas.busquedaAProfundidad(grafo,inicio, meta,estados,costos)
     	# tercer caso 
 		case 3:
      		#limpiamos la pantalla 
 			system('clear')
       		#mensaje de Búsqueda por Dijkstra 
-			print("\033[0m---Búsqueda por Dijkstra---\n")		
-			# llamamos a la funcion nodos del modulo grafo
-			inicio, meta = grafo.nodos()
-      		#llamamos a la funcion dijkstra del modulo busquedas
-			busquedas.dijkstra(grafo,inicio, meta,costos)
+			print("\033[0m---Búsqueda por Dijkstra---\n")
+			#se comprueba si todos los elementos de la lista "estados" son iguales al primer elemento
+			if all(x == estados[0] for x in estados):
+				#imprimimos que todas las piscinas están limpias
+			    print("Todas las piscinas se encuentran limpias.")
+			#caso contrario
+			else:
+				#llamamos a la funcion mostrarEstadosPiscinas del modulo grafo para mostrar todas las piscinas y sus estados antes de la limpieza
+				grafos.mostrarEstadosPiscinas(estados)
+				# llamamos a la funcion nodos del modulo grafo
+				inicio, meta = grafos.nodos()
+	      		#llamamos a la funcion dijkstra del modulo busquedas
+				busquedas.dijkstra(grafo,inicio, meta,costos)
 		case 4:
       		#limpiamos la pantalla 
 			system('clear')
 	 		#llamamos a la funcion menu
 			menu()
+		#caso que no ingrese ningun caracter
 		case _:
+			#imprimimos que la opcion no es valida
 			print("\033[31mIngrese una opción válida")
 
 if __name__ == "__main__":
-	#creamos variables globales para grafo y costos
-	global grafo, costos
+	#creamos variables globales para grafo, costos y estados
+	global grafo, costos, estados
 	#Llamamos a la funcion para que cree el grafo
 	grafo,costos,estados = grafos.creacionGrafo()
 	while True:
 		#Limpiamos la pantalla
 		system('clear')
-		#print(os.getenv("REPLIT_DB_URL"))
 		#llamada a la función menu
 		menu()
 		#solicitamos al usuario que persione cualquier tecla

@@ -1,7 +1,10 @@
 import networkx as nx
 import random
+#libreria para graficar el grafo
 import matplotlib.pyplot as plt
+#libreria para hacer uso de colores en consola
 from termcolor import colored
+
 
 def creacionGrafo():
 	"""
@@ -17,8 +20,6 @@ def creacionGrafo():
   	"""
 	# creación del grafo y diccionario de costos
 	graph, cost = [[] for i in range(21)], {}
-	#Imprimimos el nodo y el grafo en modo de lista de listas y en un diccionario para los costos
-	#print(graph, cost)
 	# añadir los nodos
 	#Piscina al aire libre -> 0
 	#Agua relajante -> 1
@@ -88,7 +89,7 @@ def creacionGrafo():
 	graph[11].append(9)
 	#9 a 8
 	graph[9].append(8)
-	graph[8].append(9)#
+	graph[8].append(9)  #
 	#8 a 12,13,14,15
 	graph[8].append(12)
 	graph[8].append(13)
@@ -111,18 +112,19 @@ def creacionGrafo():
 	# añadiendo el costo a los nodos, todos con el valor de 1
 	cost[(0, 7)] = cost[(7, 0)] = cost[(0, 8)] = cost[(8, 0)] = cost[(
 	 7, 1)] = cost[(1, 7)] = cost[(7, 6)] = cost[(6, 7)] = cost[(7, 8)] = cost[(
-	  8, 7)] = cost[(7, 16)] = cost[(16, 7)] = cost[(1, 2)] = cost[(2, 1)] = cost[(
-	   1, 5)] = cost[(5, 1)] = cost[(2, 3)] = cost[(3, 2)] = cost[(3, 4)] = cost[(
-	    4, 3)] = cost[(4, 5)] = cost[(5, 4)] = cost[(5, 6)] = cost[(
-	     6, 5)] = cost[(6, 9)] = cost[(9, 6)] = cost[(6, 10)] = cost[(
-	      10, 6)] = cost[(9, 11)] = cost[(11, 9)] = cost[(9, 8)] = cost[(
-	       8, 9)] = cost[(8, 12)] = cost[(8, 13)] = cost[(8, 14)] = cost[(
-	        8, 15)] = cost[(12, 8)] = cost[(13, 8)] = cost[(14, 8)] = cost[(
-	         15, 8)] = cost[(16, 17)] = cost[(16, 18)] = cost[(16, 19)] = cost[(
-	          16, 20)] = cost[(17, 16)] = cost[(18, 16)] = cost[(19, 16)] = cost[(20, 16)] = 2
+	  8, 7)] = cost[(7, 16)] = cost[(16, 7)] = cost[(1, 2)] = cost[(
+	   2, 1)] = cost[(1, 5)] = cost[(5, 1)] = cost[(2, 3)] = cost[(3, 2)] = cost[(
+	    3, 4)] = cost[(4, 3)] = cost[(4, 5)] = cost[(5, 4)] = cost[(
+	     5, 6)] = cost[(6, 5)] = cost[(6, 9)] = cost[(9, 6)] = cost[(
+	      6, 10)] = cost[(10, 6)] = cost[(9, 11)] = cost[(11, 9)] = cost[(
+	       9, 8)] = cost[(8, 9)] = cost[(8, 12)] = cost[(8, 13)] = cost[(
+	        8, 14)] = cost[(8, 15)] = cost[(12, 8)] = cost[(13, 8)] = cost[(
+	         14, 8)] = cost[(15, 8)] = cost[(16, 17)] = cost[(16, 18)] = cost[(
+	          16, 19)] = cost[(16, 20)] = cost[(17, 16)] = cost[(18, 16)] = cost[(
+	           19, 16)] = cost[(20, 16)] = 2
 	# creación de la lista de estados
 	states = [random.randint(1, 5) for i in range(21)]
-	
+	#retornamos el graph,cost y states
 	return graph, cost, states
 
 
@@ -136,6 +138,7 @@ def graficaGrafo(grafo):
    	____________
 	No retorna ningún valor
   	"""
+	#Creamos un grafo vacío, sin nodos, ni arcos
 	G = nx.Graph()
 
 	#Añadir nodos al grafo
@@ -147,11 +150,13 @@ def graficaGrafo(grafo):
 		for j in grafo[i]:
 			G.add_edge(i, j)
 
-	#Visualización del grafo
+	#Dibujamos el grafo
 	nx.draw(G, with_labels=True)
+	#mostramos el grafo
 	plt.show()
 
-def mostrarConexionesNodos(grafo,costo):
+
+def mostrarConexionesNodos(grafo, costo):
 	"""
 	Función que realiza el recorrido de cada nodo del grafo para mostrar sus conexiones y costo
  	Parámetros
@@ -170,6 +175,7 @@ def mostrarConexionesNodos(grafo,costo):
 			suma_costo += costo[(i, conexion)]
 		print("Costo total: ", suma_costo)
 
+
 def nodos():
 	"""
  	Función que nos permite establecer cual va a ser el nodo de partido y el objetivo
@@ -182,42 +188,94 @@ def nodos():
  	meta: nodo al cual se desea llegar
   	"""
 	# solicitamos nodo inicio
-	inicio = int(input("Ingrese el nodo donde quiere iniciar: "))
+	inicio = int(input("Ingrese la piscina donde quiere iniciar: "))
 	# solicitamos el nodo objetivo
-	meta = int(input("Ingrese el nodo al que quiere llegar: "))
-	return inicio,meta
+	meta = int(input("Ingrese la piscina a donde quiere llegar: "))
+	#retornamos el nodo de inicio y de meta
+	return inicio, meta
+
 
 def mostrarEstadosPiscinas(estados):
+	"""
+ 	Función que nos permite mostrar los estados de las piscinas ya sea que esté "Muy sucio" - "Poco sucio" - "Regular" - "Casi Limpio" - "Limpio"
+	_____________
+ 	estado: lista que contiene el estado de cada piscina con respecto a la suciedad
+  	Retorno
+   	____________
+	No retorna ningún valor
+  	"""
+	#Imprimimos mensaje piscinas sucias
 	print("\nPiscinas más sucias")
+	#bucle for que itera sobre cada elemento de la lista estados, asignando a j el índice del elemento actual y a estado su valor.
 	for j, estado in enumerate(estados):
+		#si el estado es 5
 		if estado == 5:
+			#Indicamos que la piscina está muy sucia
 			print("Piscina:", j, " - Estado piscina: ", colored("Muy sucio", "red"))
+		#si el estado es 4
 		elif estado == 4:
-			print("Piscina:", j, " - Estado piscina: ", colored("Poco sucio", "light_red"))
+			#Indicamos que la piscina está un poco sucia
+			print("Piscina:", j, " - Estado piscina: ",
+			      colored("Poco sucio", "light_red"))
+		#si el estado es 3
 		elif estado == 3:
+			#Indicamos que la piscina está regular
 			print("Piscina:", j, " - Estado piscina: ", colored("Regular", "yellow"))
+		#si el estado es 2
 		elif estado == 2:
-			print("Piscina:", j, " - Estado piscina: ", colored("Casi Limpio", "light_green"))
+			#Indicamos que la piscina está casi Limpia
+			print("Piscina:", j, " - Estado piscina: ",
+			      colored("Casi Limpio", "light_green"))
+		#si el estado es 1
 		else:
+			#Indicamos que la piscina está Limpia
 			print("Piscina:", j, " - Estado piscina: ", colored("Limpio", "cyan"))
 
 
 def limpiarDesdePiscinaMasSucia(estados):
+	"""
+ 	Función que nos permite cambiar el estado de la piscina de sucio a limpio
+   	Parámetros
+	_____________
+ 	estado: lista que contiene el estado de cada piscina con respecto a la suciedad
+  	Retorno
+   	____________
+	No retorna ningún valor
+  	"""
+	#imprimimos que iniciamos con la limpieza
 	print("\nComenzando limpieza...\n")
+	#ciclo while que se ejecuta mientras el valor máximo en la lista de estados es mayor o igual a 2
 	while max(estados) >= 2:
+		#llamamos a la función "buscarNodosSucios", que devuelve una lista de nodos sucios
 		nodosSucios = buscarNodosSucios(estados)
+		#bucle for que itera a través de cada nodo en la lista de nodosSucios
 		for nodo in nodosSucios:
+			#imprimimos que nodo se está limpiando
 			print(f"Limpiando nodo {nodo}...")
+			#cambiamos el estado del nodo actual a 1, indicando que ha sido limpiado.
 			estados[nodo] = 1
-	
-	
+
+
 # Función para buscar los nodos más sucios
 def buscarNodosSucios(estados):
-    nodosSucios = []
-    nodoMasSucio = max(estados)
-    for i, estado in enumerate(estados):
-        if estado == nodoMasSucio:
-            nodosSucios.append(i)
-    return nodosSucios
-
-	
+	"""
+ 	Función que nos buscar los nodos (piscinas) más sucias del grafo
+   	Parámetros
+	_____________
+ 	estado: lista que contiene el estado de cada piscina con respecto a la suciedad
+  	Retorno
+   	____________
+	nodosSucios: lista que contiene los nodos más sucios.
+  	"""
+	#lista vacia donde se almacenan los nodos con estado sucio
+	nodosSucios = []
+	#variable que al almacena el nodo más sucio
+	nodoMasSucio = max(estados)
+	#bucle for para iterar por todos los estados de las piscinas
+	for i, estado in enumerate(estados):
+		#validamos que si el estado del nodo es igual a Sucio
+		if estado == nodoMasSucio:
+			#añadimos ese nodo a la lista
+			nodosSucios.append(i)
+	#retornamos la lista con los nodos sucios
+	return nodosSucios
