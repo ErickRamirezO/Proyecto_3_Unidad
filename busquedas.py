@@ -71,7 +71,7 @@ def busquedaAnchura(grafo, inicio, objetivo, costo):
 					ruta.append(objetivo)
                     # se imprime la ruta más corta y el costo total
 					print(f"Ruta más corta: {ruta}")
-					print(f"Costo total: {costo[(nodo, adyacente)] + sum(costo[(ruta[i], ruta[i+1])] for i in range(len(ruta)-1))}")
+					print(f"Costo total: {costo[(nodo, adyacente)] + sum(costo[(ruta[i], ruta[i+1])] for i in range(len(ruta)-1)) -2}")
 					#termina la función
 					return
 				#caso contrario
@@ -124,37 +124,50 @@ def busquedaAProfundidad(graph, start, end, cost):
 
 
 def dijkstra(graph, start, end, cost):
-	"""
+    """
     Función que implementa el algoritmo de Dijkstra para encontrar el camino más corto
     desde un nodo de inicio hasta un nodo meta.
 
-    Args:
+    Parámetros:
     - graph: grafo que está formado por una lista de listas
     - start: nodo de inicio.
     - end: nodo meta.
     - cost: diccionario que representa el costo de ir desde un nodo a otro.
 
-    Returns:
+    Retorno:
     - El costo total de la ruta más corta y la lista de nodos visitados para llegar desde el nodo de inicio al nodo meta.
     """
-	# Inicialización de variables
-	queue = [(0, start, [])]
-	# Los nodos visitados se registran en un conjunto para evitar repetidos
-	visited = set()
-	# Algoritmo de Dijkstra
-	while queue:
-		(cost_so_far, vertex, path) = heapq.heappop(queue)
-		if vertex in visited:
-			continue
-		visited.add(vertex)
-		path = path + [vertex]
-		if vertex == end:
-			print("Ruta más corta encontrada:", path)
-			print("Costo total:", cost_so_far)
-			return
-		for neighbor in graph[vertex]:
-			new_cost = cost.get((vertex, neighbor), float('inf'))
-			if neighbor not in visited:
-				heapq.heappush(queue, (cost_so_far + new_cost, neighbor, path))
+    # Inicialización de variables
+    queue = [(0, start, [])]
+    # Los nodos visitados se registran en un conjunto para evitar repetidos
+    visited = set()
+    # Algoritmo de Dijkstra
+    while queue:
+      # extrae el elemento con el valor más bajo de la cola de prioridad queue, y lo devuelve. La cola de prioridad se construye utilizando los valores de cost_so_far + new_cost, por lo que los elementos que tienen el valor más bajo corresponden a los nodos que tienen el menor costo acumulado hasta ese momento.
+        cost_so_far, vertex, path = heapq.heappop(queue)
+      #Si el nodo actual ya ha sido visitado anteriormente, se continúa con la siguiente iteración del bucle, saltando a la siguiente línea de código.
+        if vertex in visited:
+            continue
+          #Si el nodo actual no ha sido visitado antes, se agrega a la lista de nodos visitados.
+        visited.add(vertex)
+      #Se agrega el nodo actual al final de la lista de nodos visitados para construir la ruta.
+        path = path + [vertex]
+      #Si el nodo actual es el nodo final, se ha encontrado una ruta desde el nodo de inicio hasta el nodo final. 
+        if vertex == end:
+          #En ese caso, se imprime la ruta más corta encontrada y el costo total acumulado hasta ese punto
+            print("Ruta más corta encontrada:", path)
+          
+            print("Costo total:", cost_so_far)
+          #Luego se devuelve el costo total acumulado y la ruta como una tupla.
+            return cost_so_far, path
+          #Se itera sobre los nodos vecinos al nodo actual.
+        for neighbor in graph[vertex]:
+          #Se obtiene el costo del camino desde el nodo actual hasta su vecino. Si no hay una conexión directa entre el nodo actual y el vecino, el costo se establece en infinito.
+            new_cost = cost.get((vertex, neighbor), float('inf'))
+          #Si el vecino no ha sido visitado antes, se agrega a la cola de prioridad con el costo total acumulado hasta ese punto (cost_so_far más el nuevo costo para llegar al vecino), el propio vecino (neighbor) y la ruta hasta el nodo actual que se está visitando (path). Esto se hace para todos los vecinos del nodo actual.
+            if neighbor not in visited:
+                heapq.heappush(queue, (cost_so_far + new_cost, neighbor, path))
+              #Si se han visitado todos los nodos que se pueden alcanzar desde el nodo de inicio y no se ha llegado al nodo final, entonces no hay una ruta posible. En ese caso, se imprime un mensaje que indica que no se ha encontrado una ruta y se devuelve None para el costo y la ruta.
 
-	print("No se encontró ninguna ruta desde", start, "hasta", end)
+    print("No se encontró ninguna ruta desde", start, "hasta", end)
+    return None, None

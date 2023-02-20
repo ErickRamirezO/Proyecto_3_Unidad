@@ -11,27 +11,27 @@
 
 
 ## Sobre nuestro agente
-
-
+Un agente inteligente para la limpieza de piscinas de balnearios se basa en sensores y algoritmos avanzados que le permiten detectar y reconocer objetos, obstáculos y otros elementos en el ambiente acuático. El agente puede ajustar su comportamiento y movimiento para realizar una limpieza completa y eficaz de la piscina sin la necesidad de supervisión humana.
 
 ## Desarrollo 
+El agente inteligente de limpieza de piscinas también puede ser programado para realizar tareas específicas de acuerdo con las necesidades del balneario.
 
+La creación de un agente inteligente de limpieza de piscinas de balnearios tiene como objetivo mejorar la eficiencia y la calidad del mantenimiento de la piscina, lo que a su vez puede aumentar la satisfacción del cliente y mejorar la rentabilidad del negocio
 
 
 ## Librerías Necesarias 
 
 Este software usa librerias para 
 
-* librerías para calculo de la complejidad de espacio y tiempo.
+* Graficar el grafo
 
 ```py
-pip install memory_profiler
-pip install big_o
+pip install matplotlib
 ```
-
-
-## Uso
-
+* Hacer uso de colores en consola
+```py
+pip install termcolor
+```
 
 ## Autores
 

@@ -180,11 +180,9 @@ def menuBusqueda():
 			system('clear')
       		#mensaje de Búsqueda por Dijkstra 
 			print("\033[0m---Búsqueda por Dijkstra---\n")
-			#mostramos graficamente el grafo
-			grafos.graficaGrafo(grafo)
 			# llamamos a la funcion nodos del modulo grafo
 			inicio, meta = grafos.nodos()
-	      		#llamamos a la funcion dijkstra del modulo busquedas
+	      	#llamamos a la funcion dijkstra del modulo busquedas
 			busquedas.dijkstra(grafo,inicio, meta,costos)
 		#caso 5
 		case 5:
