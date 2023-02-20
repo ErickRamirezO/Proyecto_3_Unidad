@@ -167,12 +167,20 @@ def mostrarConexionesNodos(grafo, costo):
    	____________
 	No retorna ningún valor
  	"""
+	#bucle for que utiliza la función "enumerate" para obtener tanto el índice "i" como el valor "nodo" de la lista "grafo".
 	for i, nodo in enumerate(grafo):
+		#Se imprime el índice del nodo.
 		print("Nodo: ", i)
+		#Para el nodo actual se imprime todos los otros nodos con los que está conectado.
 		print("Conexiones: ", nodo)
+		#Se inicializa la variable "suma_costo" a cero. Esta variable se utilizará para sumar el costo de todas las conexiones del nodo.
 		suma_costo = 0
+		#bucle for que recorre todas las conexiones del nodo actual.
 		for conexion in nodo:
+			#variable "costo" que se usa para buscar el costo de la conexión entre el nodo actual (índice "i") y la conexión actual.
+			#Se agrega el costo actual a "suma_costo".
 			suma_costo += costo[(i, conexion)]
+		#Imprimimos el costo total de todas las conexiones del nodo actual.
 		print("Costo total: ", suma_costo)
 
 

@@ -1,6 +1,8 @@
 #libreria para usar las colas de prioridad
 import heapq
-def busqueda_general(grafo, costo, inicio, meta):
+
+
+def busquedaTodasLasRutasPosibles(grafo, costo, inicio, meta):
 	"""
 	Funcion que realiza la busqueda general desde el nodo de inicio hasta el nodo meta retornando el valor del costo por la busqueda realizada.
  	Parámetros
@@ -31,73 +33,128 @@ def busqueda_general(grafo, costo, inicio, meta):
 					lista.append(
 					 (vecino, ruta + [vecino], costo_actual + costo[(nodo, vecino)]))
 
- 	# Imprime cada ruta y su costo encontrado.
+# Imprime cada ruta y su costo encontrado.
 	for ruta, costo in rutas:
 		print("Ruta:", ruta, "Costo:", costo)
 
-
-def busquedaAProfundidad(graph, start, end, estados, cost):
+def busquedaAnchura(grafo, inicio, objetivo, costo):
 	"""
-	Funcion que realiza la busqueda general desde el nodo de inicio hasta el nodo meta retornando el valor del costo por la busqueda realizada.
- 	Parámetros
-  	--------------------
-   	grafo: grafo que está formado por una lista de listas
- 	inicio: nodo desde donde se va a iniciar la búsqueda.
-  	meta: nodo a donde se desea llegar.
-    estados: diccionario de los estados de cada nodo
-   	Retorno
-   	--------------------
-   	No retorna ningún valor
- 	"""
+    Realiza la búsqueda por anchura desde el nodo de inicio hasta el nodo meta,
+    y encuentra el nodo más sucio de una lista.
+
+    Parametros:
+    - graph: grafo que está formado por una lista de listas
+    - start: nodo de inicio.
+    - end: nodo meta.
+    - cost: diccionario que representa el costo de ir desde un nodo a otro.
+
+    Retorno:
+    - No retorna ningún valor
+    """
+    # se usa una cola para almacenar los nodos que se deben visitar
+    # una lista de tuplas que contiene el nodo actual y la ruta hasta el nodo actual
+    # se almacenan los nodos ya visitados
+	cola = [(inicio, [inicio])]  
+	visitados = set()
+ 
+    # se sigue buscando mientras haya nodos por visitar en la cola
+	while cola:
+        # se saca el primer elemento de la cola
+		(nodo, ruta) = cola.pop(0)
+        # si el nodo no ha sido visitado, se marca como visitado
+		if nodo not in visitados:
+            # se agregan los nodos adyacentes a la cola y se actualiza la ruta
+			for adyacente in grafo[nodo]:
+				#si el nodo adyacente es igual al objetivo entonces...
+				if adyacente == objetivo:
+					#añadimos ese nodo a la ruta
+					ruta.append(objetivo)
+                    # se imprime la ruta más corta y el costo total
+					print(f"Ruta más corta: {ruta}")
+					print(f"Costo total: {costo[(nodo, adyacente)] + sum(costo[(ruta[i], ruta[i+1])] for i in range(len(ruta)-1))}")
+					#termina la función
+					return
+				#caso contrario
+				else:
+					cola.append((adyacente, ruta + [adyacente]))
+            # se marca el nodo actual como visitado
+			visitados.add(nodo)
+ 
+    # si no se encuentra una ruta, se imprime un mensaje de error
+	print("No se encontró una ruta")
+
+
+def busquedaAProfundidad(graph, start, end, cost):
+	"""
+    Realiza la búsqueda a profundidad desde el nodo de inicio hasta el nodo meta,
+    y encuentra el nodo más sucio de una lista.
+
+    Parametros:
+    - graph: grafo que está formado por una lista de listas
+    - start: nodo de inicio.
+    - end: nodo meta.
+    - cost: diccionario que representa el costo de ir desde un nodo a otro.
+
+    Retorno:
+    - No retorna ningún valor
+    """
 	# Se crea una lista stack que contiene el nodo de inicio, una lista con solo ese nodo y un costo inicial de cero
 	stack = [(start, [start], 0)]
-    # Se define una variable para almacenar el nodo más sucio encontrado y otra para el costo total
-	nodo_mas_sucio = None
+	# Se define una variable para almacenar el nodo más sucio encontrado y otra para el costo total
+	ruta = []
 	costo_total = 0
+
 	# Mientras la lista stack tenga elementos, se ejecuta un bucle
 	while stack:
-        # Se toma el último elemento de la lista stack (el nodo), su camino y su costo actual
 		vertex, path, cost_so_far = stack.pop()
-        # Si el nodo actual no está en el estado, se salta a la siguiente iteración
-		if vertex not in estados:
-			continue
-        # Si el nodo actual es más sucio que el nodo almacenado previamente, se actualiza el nodo y el costo total
-		if nodo_mas_sucio is None or estados[vertex] > estados[nodo_mas_sucio]:
-			nodo_mas_sucio = vertex
+		if vertex == end:
+			ruta = path
 			costo_total = cost_so_far
-        # Se recorren los vecinos del nodo actual
+			break
 		for neighbor in graph[vertex]:
-            # Se calcula el costo de moverse desde el nodo actual al vecino
 			new_cost = cost.get((vertex, neighbor), 0)
-            # Si el vecino no está en el camino y está en el estado y es más sucio que el nodo almacenado previamente,
-            # se agrega el vecino, su camino actualizado y el costo total actualizado a la lista stack
-			if neighbor not in path and neighbor in estados and estados[neighbor] > estados[nodo_mas_sucio]:
+			# Si el vecino no está en el camino y es más sucio que el actual nodo más sucio,
+			# se añade a la pila para ser explorado más tarde.
+			if neighbor not in path:
 				stack.append((neighbor, path + [neighbor], cost_so_far + new_cost))
 
 	#Imprimimos el nodo más sucio y el coste por la búsqueda
-	print(f"El nodo más sucio es: {nodo_mas_sucio}")
-	print(f"Costo por búsqueda: {costo_total}")
+	print(f"La ruta para llegar desde el nodo {start} al nodo {end}: {ruta}")
+	print(f"Costo: {costo_total}")
 
-def dijkstra(graph, start, end, costs):
-    # La cola de prioridad contiene pares (costo, nodo, camino)
-    queue = [(0, start, [start])]
-    # Los nodos visitados se registran en un conjunto para evitar repetidos
-    visited = set()
-    while queue:
-        # Obtener el nodo con el costo mínimo
-        (cost, current_node, path) = heapq.heappop(queue)
-        # Si el nodo actual no ha sido visitado
-        if current_node not in visited:
-            # Añadirlo a los visitados
-            visited.add(current_node)
-            # Si el nodo actual es el nodo final, devolver el camino y el costo
-            if current_node == end:
-                return (cost, path)
-            # Revisar cada vecino del nodo actual
-            for neighbor in graph[current_node]:
-                if neighbor not in visited:
-                    # Añadir el vecino a la cola de prioridad
-                    # con el costo actualizado y el camino actualizado
-                    heapq.heappush(queue, (cost + costs[(current_node, neighbor)], neighbor, path + [neighbor]))
-    # Si no se encuentra un camino, devolver infinito y un camino vacío
-    return (float("inf"), [])
+
+def dijkstra(graph, start, end, cost):
+	"""
+    Función que implementa el algoritmo de Dijkstra para encontrar el camino más corto
+    desde un nodo de inicio hasta un nodo meta.
+
+    Args:
+    - graph: grafo que está formado por una lista de listas
+    - start: nodo de inicio.
+    - end: nodo meta.
+    - cost: diccionario que representa el costo de ir desde un nodo a otro.
+
+    Returns:
+    - El costo total de la ruta más corta y la lista de nodos visitados para llegar desde el nodo de inicio al nodo meta.
+    """
+	# Inicialización de variables
+	queue = [(0, start, [])]
+	# Los nodos visitados se registran en un conjunto para evitar repetidos
+	visited = set()
+	# Algoritmo de Dijkstra
+	while queue:
+		(cost_so_far, vertex, path) = heapq.heappop(queue)
+		if vertex in visited:
+			continue
+		visited.add(vertex)
+		path = path + [vertex]
+		if vertex == end:
+			print("Ruta más corta encontrada:", path)
+			print("Costo total:", cost_so_far)
+			return
+		for neighbor in graph[vertex]:
+			new_cost = cost.get((vertex, neighbor), float('inf'))
+			if neighbor not in visited:
+				heapq.heappush(queue, (cost_so_far + new_cost, neighbor, path))
+
+	print("No se encontró ninguna ruta desde", start, "hasta", end)
